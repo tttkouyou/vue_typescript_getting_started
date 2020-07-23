@@ -4,12 +4,14 @@
     <section>
       <card v-for="product in products" :key="product.id" :product="product" />
     </section>
+    <modal />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Card from "../../components/organisms/home/card.vue";
+import Modal from "../../components/organisms/home/modal.vue";
 import { getProducts } from "../../helper/getProducts";
 import { Product } from "../../@types/Product";
 
@@ -17,6 +19,7 @@ export default Vue.extend({
   // importしてきたコンポーネントはここで定義をしないと使えない
   components: {
     Card,
+    Modal,
   },
   data() {
     return {};
