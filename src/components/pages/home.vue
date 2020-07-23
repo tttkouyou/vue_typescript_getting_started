@@ -16,7 +16,7 @@ import { Product } from "../../@types/Product";
 export default Vue.extend({
   // importしてきたコンポーネントはここで定義をしないと使えない
   components: {
-    Card
+    Card,
   },
   data() {
     return {};
@@ -25,13 +25,23 @@ export default Vue.extend({
     // 何でもかんでもdataに置くのでなく、不変なものをcomputedに切り出す
     products(): Product[] {
       return getProducts(10);
-    }
+    },
   },
   mounted() {
     console.log(this.products);
-  }
+  },
 });
 </script>
 
 <style>
+section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+section::after {
+  content: "";
+  display: block;
+  width: 42.3vw;
+}
 </style>

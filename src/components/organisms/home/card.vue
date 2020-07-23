@@ -16,13 +16,17 @@ import Vue, { PropType } from "vue";
 import { Product } from "../../../@types/Product";
 export default Vue.extend({
   props: {
-    product: Object as PropType<Product>
-  }
+    product: Object as PropType<Product>,
+  },
 });
 </script>
 
 <style>
 .card-container {
   border: 1px solid;
+  width: 20vw;
+  height: 60vh;
+  margin: 5px;
+  padding: 3px;
 }
 </style>
