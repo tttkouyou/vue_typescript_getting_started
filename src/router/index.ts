@@ -5,17 +5,22 @@ import * as Pages from '../components/pages';
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Pages.Home,
-  },
+	{
+		path: '/',
+		name: 'Home',
+		component: Pages.Home
+	},
+	{
+		path: '/Basket',
+		name: 'Basket',
+		component: Pages.Basket
+	}
 ];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
+	mode: 'history',
+	base: process.env.BASE_URL,
+	routes
 });
 
 export default router;
