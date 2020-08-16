@@ -63,9 +63,13 @@ export default Vue.extend({
   computed: {
     // 何でもかんでもdataに置くのでなく、不変なものをcomputedに切り出す
     products(): Product[] {
-      return this.productInHome.sort((a, b) => {
-        return a.favorite < b.favorite ? 1 : a.favorite > b.favorite ? -1 : 0;
-      });
+      return this.productInHome
+        .sort((a, b) => {
+          return a.id - b.id;
+        })
+        .sort((a, b) => {
+          return b.favorite - a.favorite;
+        });
     },
   },
   mounted() {
@@ -90,9 +94,6 @@ export default Vue.extend({
     favoriteOff(product: Product) {
       //favorite(お気に入り)を無効にする
       product.favorite -= 1;
-      //先頭に持ってきていたproductを、元あったindexの場所に戻す(product.idを使用)
-      const idx = this.productInHome.indexOf(product);
-      this.productInHome.splice(idx, 1).splice(product.id, 0, product);
     },
   },
 });
