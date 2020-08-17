@@ -45,7 +45,6 @@ import { Product } from "../../@types/Product";
 
 interface State {
   selectedItemData: Product | null;
-  productInHome: Product[];
 }
 
 export default Vue.extend({
@@ -57,15 +56,12 @@ export default Vue.extend({
   data(): State {
     return {
       selectedItemData: null,
-      productInHome: getProducts(10),
     };
   },
   computed: {
     // 何でもかんでもdataに置くのでなく、不変なものをcomputedに切り出す
     products(): Product[] {
-      return this.productInHome.sort((a, b) => {
-        return a.favorite < b.favorite ? 1 : a.favorite > b.favorite ? -1 : 0;
-      });
+      return this.$store.getters.productFavoriteSort;
     },
   },
   mounted() {
@@ -85,14 +81,10 @@ export default Vue.extend({
     },
     favoriteOn(product: Product) {
       //favorite(お気に入り)を有効にする(有効：１、無効：０)
-      product.favorite += 1;
+      this.$store.commit("favoriteOnFunction", product);
     },
     favoriteOff(product: Product) {
-      //favorite(お気に入り)を無効にする
-      product.favorite -= 1;
-      //先頭に持ってきていたproductを、元あったindexの場所に戻す(product.idを使用)
-      const idx = this.productInHome.indexOf(product);
-      this.productInHome.splice(idx, 1).splice(product.id, 0, product);
+      this.$store.commit("favoriteOffFunction", product);
     },
   },
 });

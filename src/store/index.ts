@@ -2,15 +2,18 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { Product } from '@/@types/Product';
 import { GroupeByProductsId } from '@/@types/GroupeByProductsId';
+import { getProducts } from '../helper/getProducts';
 
 Vue.use(Vuex);
 
 interface State {
 	products: Product[];
+	productInHome: Product[];
 }
 
 const initState: State = {
-	products: []
+	products: [],
+	productInHome: getProducts(10)
 };
 
 export default new Vuex.Store({
@@ -24,6 +27,16 @@ export default new Vuex.Store({
 		cancelProduct: (state, product: Product) => {
 			const idx = state.products.map((product: Product) => product.id).indexOf(product.id);
 			state.products.splice(idx, 1);
+		},
+		//お気に入りを有効にする
+		favoriteOnFunction: (state, product: Product) => {
+			const idx = state.productInHome.indexOf(product);
+			state.productInHome[idx].favorite += 1;
+		},
+		//お気に入りを無効にする
+		favoriteOffFunction: (state, product: Product) => {
+			const idx = state.productInHome.indexOf(product);
+			state.productInHome[idx].favorite -= 1;
 		}
 	},
 	getters: {
@@ -38,6 +51,15 @@ export default new Vuex.Store({
 					return {
 						[productId]: state.products.filter((product: Product) => product.id === productId)
 					};
+				});
+		},
+		productFavoriteSort(state): Product[] {
+			return state.productInHome
+				.sort((a, b) => {
+					return a.id - b.id;
+				})
+				.sort((a, b) => {
+					return b.favorite - a.favorite;
 				});
 		}
 	}
